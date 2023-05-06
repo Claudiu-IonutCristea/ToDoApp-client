@@ -1,0 +1,52 @@
+<div class="modal-header">
+    <h3>Register</h3>
+    <button type="button" class="btn-close" (click)="closeModal()"></button>
+</div>
+
+<div class="modal-body">
+    <form id="registerForm" [formGroup]="registerForm" (ngSubmit)="formSubmit()">
+        <!-- Name input -->
+        <label class="form-label" for="name">Name<span class="text-warning">*</span></label>
+        <input class="form-control" id="name" formControlName="name" type="text"
+        [ngClass]="name && name.invalid && name.touched ? 'is-invalid' : ''">
+
+        <div class="text-danger" *ngIf="name && name.touched && name.errors?.['required']">Name is required.</div>
+
+        <!-- Email input -->
+        <label class="form-label mt-3" for="email">Email<span class="text-warning">*</span></label>
+        <input class="form-control" id="email" formControlName="email" type="email"
+        [ngClass]="email && email.invalid && email.touched ? 'is-invalid' : ''">
+
+        <div class="text-danger" *ngIf="email && email.touched && email.errors?.['required']">Email is required.</div>
+        <div class="text-danger" *ngIf="email && email.touched && email.errors?.['email']">Email is invalid.</div>
+        
+        <!-- Pass input -->
+        <label class="form-label mt-3" for="password">Password<span class="text-warning">*</span></label>
+        <input class="form-control" id="password" formControlName="password" type="password"
+        [ngClass]="password && password.invalid && password.touched ? 'is-invalid' : ''">
+
+        <div class="text-danger" *ngIf="password && password.touched && password.errors?.['required']">Password is required.</div>
+
+        <!-- Pass Confirm input -->
+        <label class="form-label mt-3" for="passwordConfirm">Confirm Password<span class="text-warning">*</span></label>
+        <input class="form-control" id="passwordConfirm" formControlName="passwordConfirm" type="password"
+        [ngClass]="passwordConfirm && passwordConfirm.invalid && passwordConfirm.touched ? 'is-invalid' : ''">
+
+        <div class="text-danger" *ngIf="passwordConfirm && passwordConfirm.touched && passwordConfirm.errors?.['required']">Please confirm the password.</div>
+        <div class="text-danger" *ngIf="password && passwordConfirm && passwordConfirm.touched && password.touched && (password.value != passwordConfirm.value)">Passwords do not match.</div>
+
+        <!-- <div class="form-check mt-3">
+            <label class="form-check-label" for="rememberMe">Remember me</label>
+            <input class="form-check-input" id="rememberMe" formControlName="rememberMe" type="checkbox">
+        </div> -->
+    </form>
+    
+    <div class="text-warning mt-2">
+        <i>*required</i>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="submit" class="btn btn-primary" form="registerForm" [disabled]="registerForm.invalid">Register</button>
+    <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+</div>
