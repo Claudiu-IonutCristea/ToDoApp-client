@@ -1,0 +1,31 @@
+<div class="modal-header">
+    <h3>Login</h3>
+    <button type="button" class="btn-close" (click)="closeModal()"></button>
+</div>
+
+<div class="modal-body">
+    <form id="loginForm" [formGroup]="loginForm" (ngSubmit)="formSubmit()">
+        <!-- Email input -->
+        <label class="form-label mt-3" for="email">Email</label>
+        <input class="form-control" id="email" formControlName="email" type="email"
+        [ngClass]="email && email.invalid && email.touched ? 'is-invalid' : ''">
+
+        <div class="text-danger" *ngIf="email && email.touched && email.errors?.['email']">Email is invalid.</div>
+        
+        <!-- Pass input -->
+        <label class="form-label mt-3" for="password">Password</label>
+        <input class="form-control" id="password" formControlName="password" type="password"
+        [ngClass]="password && password.invalid && password.touched ? 'is-invalid' : ''">
+
+        <!-- RememberMe Chack -->
+        <div class="form-check mt-3">
+            <label class="form-check-label" for="rememberMe">Remember me</label>
+            <input class="form-check-input" id="rememberMe" formControlName="rememberMe" type="checkbox">
+        </div>
+    </form>
+</div>
+
+<div class="modal-footer">
+    <button type="submit" class="btn btn-primary" form="registerForm" [disabled]="loginForm.invalid">Login</button>
+    <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+</div>

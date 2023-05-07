@@ -6,12 +6,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ModalRegisterComponent } from './components/modals/modal-register/modal-register.component';
+import { ModalLoginComponent } from './components/modals/modal-login/modal-login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    ModalRegisterComponent
+    ModalRegisterComponent,
+    ModalLoginComponent
   ],
   imports: [
     BrowserModule,
