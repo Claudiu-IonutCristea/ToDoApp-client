@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalRegisterComponent } from './components/modals/modal-register/modal-register.component';
+import { ModalLoginComponent } from './components/modals/modal-login/modal-login.component';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +13,6 @@ export class AppComponent {
   constructor(private modalService: NgbModal) {}
 
   openModal(){
-    this.modalService.open(ModalRegisterComponent);
+    this.modalService.open(ModalLoginComponent);
   }
 }
