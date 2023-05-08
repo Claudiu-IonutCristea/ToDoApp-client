@@ -7,13 +7,15 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ModalRegisterComponent } from './components/modals/modal-register/modal-register.component';
 import { ModalLoginComponent } from './components/modals/modal-login/modal-login.component';
+import { TodosComponent } from './components/todos/todos.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     ModalRegisterComponent,
-    ModalLoginComponent
+    ModalLoginComponent,
+    TodosComponent
   ],
   imports: [
     BrowserModule,

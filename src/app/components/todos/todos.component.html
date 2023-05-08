@@ -1,0 +1,36 @@
+<div ngbAccordion [closeOthers]="true" class="mt-5">
+    <div ngbAccordionItem *ngFor="let todo of todos; let i=index">
+        <h2 ngbAccordionHeader>
+            <button ngbAccordionButton>{{ todo.title }}</button>
+        </h2>
+        <div class="progress">
+            <div class="progress-bar bg-success progress-bar-striped" role="progressbar" [ngStyle]="{'width': todo.complete + '%'}"></div>
+        </div>
+        <div ngbAccordionCollapse>
+            <div ngbAccordionBody>
+                <ng-template>
+                    <button class="btn btn-danger m-3" type="button">Delete ToDo List</button>
+
+                    <ul style="list-style-type: none;">
+                        <li *ngFor="let item of todos[i].todoItems">
+                            <div class="form-check" (click)="updateCheck(item)">
+                                <input class="form-check-input" type="checkbox" [checked]="item.completed">
+                                <label class="form-check-label" [ngClass]="item.completed ? 'text-muted' : ''"> {{ item.text }} </label>
+                            </div>
+                        </li>
+                    </ul>
+                    
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="enter new item" #newItem
+                        (keyup.enter)="addNewItem(todo, newItem.value); newItem.value=''">
+
+                        <button class="btn btn-primary" type="button" 
+                        (click)="addNewItem(todo, newItem.value); newItem.value=''">Add item</button>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>
+
+
