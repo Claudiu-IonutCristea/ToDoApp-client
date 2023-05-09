@@ -1,4 +1,20 @@
-<div ngbAccordion [closeOthers]="true" class="mt-5">
+<div class="row">
+    <div class="col-xl-5 col-lg-5">
+        <div class="input-group mt-3">
+            <input type="text" class="form-control" placeholder="new ToDo title" #newTodo
+            (keyup.enter)="addTodo(newTodo.value); newTodo.value=''">
+        
+            <button class="btn btn-primary" type="button"
+            (click)="addTodo(newTodo.value); newTodo.value=''">Create new ToDo</button>
+        </div>
+    </div>
+</div>
+
+<div class="text-muted m-3" *ngIf="todos.length == 0 || todos == undefined">
+    <h4>There are no ToDo lists.</h4>
+</div>
+
+<div ngbAccordion [closeOthers]="true" class="mt-3">
     <div ngbAccordionItem *ngFor="let todo of todos; let i=index">
         <h2 ngbAccordionHeader>
             <button ngbAccordionButton>{{ todo.title }}</button>
@@ -9,12 +25,13 @@
         <div ngbAccordionCollapse>
             <div ngbAccordionBody>
                 <ng-template>
-                    <button class="btn btn-danger m-3" type="button">Delete ToDo List</button>
+                    <button class="btn btn-danger m-3" type="button" (click)="deleteTodo(todo)">Delete ToDo List</button>
 
                     <ul style="list-style-type: none;">
                         <li *ngFor="let item of todos[i].todoItems">
-                            <div class="form-check" (click)="updateCheck(item)">
-                                <input class="form-check-input" type="checkbox" [checked]="item.completed">
+                            <div class="form-check-inline">
+                                <button class="btn p-0" type="button" (click)="deleteItem(todos[i], item)"><i class="bi bi-trash text-danger"></i></button>
+                                <input class="form-check-input mx-1" type="checkbox" [checked]="item.completed" (click)="updateCheck(item)">
                                 <label class="form-check-label" [ngClass]="item.completed ? 'text-muted' : ''"> {{ item.text }} </label>
                             </div>
                         </li>
