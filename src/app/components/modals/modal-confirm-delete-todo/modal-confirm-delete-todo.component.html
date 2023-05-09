@@ -1,0 +1,13 @@
+<div class="modal-header">
+    <h3>Please confirm</h3>
+    <button type="button" class="btn-close" (click)="closeModal()"></button>
+</div>
+
+<div class="modal-body">
+    Are you sure you want to delete the list <span class="text-danger">{{ todoName }}</span>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="confirmDelete()">Delete</button>
+    <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+</div>

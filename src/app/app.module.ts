@@ -8,6 +8,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { ModalRegisterComponent } from './components/modals/modal-register/modal-register.component';
 import { ModalLoginComponent } from './components/modals/modal-login/modal-login.component';
 import { TodosComponent } from './components/todos/todos.component';
+import { ModalConfirmDeleteTodoComponent } from './components/modals/modal-confirm-delete-todo/modal-confirm-delete-todo.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { TodosComponent } from './components/todos/todos.component';
     NavbarComponent,
     ModalRegisterComponent,
     ModalLoginComponent,
-    TodosComponent
+    TodosComponent,
+    ModalConfirmDeleteTodoComponent
   ],
   imports: [
     BrowserModule,
