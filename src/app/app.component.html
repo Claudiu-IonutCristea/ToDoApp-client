@@ -1,4 +1,18 @@
 <app-navbar></app-navbar>
 <div class="container">
-    <app-todos></app-todos>
+    <div class="mt-3" *ngIf="!loggedIn">
+        <h4 class="text-muted fst-italic">Log in to show ToDos from your account</h4>
+    </div>
+
+    <div class="mt-5" *ngIf="loggedIn">
+        <h3><i class="bi bi-cloud-check"></i> Remote Storage</h3>
+        <hr>
+        <app-todos></app-todos>
+    </div>
+
+    <div class="mt-5">
+        <h3><i class="bi bi-pc-display"></i> Local storage</h3>
+        <hr>
+        <app-todos [useLocalStorage]="true"></app-todos>
+    </div>
 </div>

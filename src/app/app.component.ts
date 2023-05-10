@@ -6,5 +6,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class AppComponent {
   title = 'todoapp-client';
+  loggedIn = false;
+
   
 }
