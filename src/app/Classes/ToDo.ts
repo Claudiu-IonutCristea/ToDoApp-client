@@ -2,8 +2,8 @@ import { v4 as uuid } from 'uuid';
 
 export class ToDo {
 
-    constructor(title: string, todoItems?: IToDoItem[]){
-        this.id = uuid();
+    constructor(title: string, todoItems?: IToDoItem[], id?: string){
+        this.id = id == undefined ? uuid() : id;
         this.title = title;
 
         if(todoItems == null) {
