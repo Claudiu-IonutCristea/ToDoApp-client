@@ -10,12 +10,12 @@
     </div>
 </div>
 
-<div class="text-muted m-3" *ngIf="todos.length == 0 || todos == undefined">
+<div class="text-muted m-3" *ngIf="todos && (todos.length == 0 || todos == undefined)">
     <h4>There are no ToDo lists.</h4>
 </div>
 
-<div ngbAccordion [closeOthers]="true" class="mt-3">
-    <div ngbAccordionItem *ngFor="let todo of todos; let i=index">
+<div ngbAccordion [closeOthers]="true" class="mt-3" *ngIf="todos">
+    <div ngbAccordionItem *ngFor="let todo of todos; let i=index" [collapsed]="todo.id !== 'tutorialTodo'">
         <h2 ngbAccordionHeader>
             <button ngbAccordionButton>{{ todo.title }}</button>
         </h2>
