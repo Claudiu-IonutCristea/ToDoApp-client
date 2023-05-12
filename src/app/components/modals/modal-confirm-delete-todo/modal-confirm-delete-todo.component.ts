@@ -8,7 +8,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class ModalConfirmDeleteTodoComponent {
   @Output() delete: EventEmitter<any> = new EventEmitter();
 
-  public todoName = "test";
+  public todoName: string = "";
 
   constructor(
     public activeModal: NgbActiveModal,
