@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ToDo, IToDoItem } from 'src/app/Classes/ToDo';
-import { TODOs } from 'src/app/mock-todos';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalConfirmDeleteTodoComponent } from '../modals/modal-confirm-delete-todo/modal-confirm-delete-todo.component';
 import { StorageService } from 'src/app/services/storage.service';
@@ -13,12 +12,19 @@ import { StorageService } from 'src/app/services/storage.service';
 export class TodosComponent implements OnInit{
   @Input() useLocalStorage = false;
 
-  TODOSLOCAL = 'todoslocal';
-
   todos = new Array<ToDo>();
-
-  // todos: ToDo[] = TODOs;
-  // todosLocal: ToDo[] = this.setupLocal();
+  editingItem: { 
+    editing: boolean,
+    item?: IToDoItem
+  } = {
+    editing: false
+  }
+  editingTodo: {
+    editing: boolean,
+    todo?: ToDo,
+  } = {
+    editing: false
+  }
 
   ngOnInit(): void {
     if(this.useLocalStorage){
@@ -37,23 +43,28 @@ export class TodosComponent implements OnInit{
        text: text,
        completed: false
       })
+
+      this.storageService.saveLocal(this.todos);
     }
   }
 
   addTodo(title: string){
     if(title){
       this.todos?.unshift(new ToDo(title));
+
+      this.storageService.saveLocal(this.todos);
     }
-    console.log(this.todos);
   }
 
   updateCheck(item: IToDoItem){
     item.completed = !item.completed;
+    this.storageService.saveLocal(this.todos);
   }
 
   deleteItem(todo: ToDo, item: IToDoItem){
     const i = todo.todoItems.indexOf(item);
     todo.todoItems.splice(i, 1);
+    this.storageService.saveLocal(this.todos);
   }
 
   deleteTodo(todo: ToDo){
@@ -62,19 +73,45 @@ export class TodosComponent implements OnInit{
     modalRef.componentInstance.delete.subscribe(() => {
       const i = this.todos?.indexOf(todo, 0);
       this.todos.splice(i, 1);
+      this.storageService.saveLocal(this.todos);
     })
   }
 
+  startEditItem(item: IToDoItem){
+    this.editingItem = {
+      editing: true,
+      item: item
+    }
+  }
+
+  finishEditItem(confirm: boolean, newText?: string){
+    if(confirm && newText && this.editingItem.item){
+      this.editingItem.item.text = newText;
+      this.storageService.saveLocal(this.todos);
+    }
+
+    this.editingItem = {
+      editing: false,
+      item: undefined
+    }
+  }
+
+  editTodoTitle(todo: ToDo){
+    this.editingTodo = {
+      editing: true,
+      todo: todo,
+    }
+  }
+
   setupLocal(): ToDo[]{
-    const todosLocalJson = localStorage.getItem(this.TODOSLOCAL);
+    const todosLocalJson = localStorage.getItem(this.storageService.TODOSLOCAL);
     let todosLocalParsed;
     let todosLocal = new Array<ToDo>();
     if(todosLocalJson == null){
       //no local todos
       const tutorialTodo = this.tutorialTodo();
-      localStorage.setItem(this.TODOSLOCAL, JSON.stringify(Array<ToDo>(tutorialTodo)));
+      localStorage.setItem(this.storageService.TODOSLOCAL, JSON.stringify(Array<ToDo>(tutorialTodo)));
       todosLocal.push(this.tutorialTodo());
-      console.log(this.tutorialTodo());
       return todosLocal;
     }
     else{
