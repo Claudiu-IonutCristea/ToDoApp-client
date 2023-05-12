@@ -1,0 +1,18 @@
+<button ngbAccordionButton *ngIf="!editing && todo">
+    <button class="btn p-0 md-1 text-info" type="button" ngbTooltip="edit" (click)="$event.stopPropagation();editing=true">
+        <i class="bi bi-pencil-square"></i>
+    </button>
+    {{ todo.title }}
+</button>
+
+<!-- Display for when todo.title is being edited -->
+<div class="input-group" *ngIf="editing && todo" ngClass="p-3">
+    <input type="text" class="form-control text-bg-dark" placeholder="{{ todo.title }}" value="{{ todo.title}}" #newTitle
+    (keyup.enter)="editTitle(newTitle.value);editing=false">
+
+    <button class="btn btn-primary" type="button"
+    (click)="editTitle(newTitle.value);editing=false">Confirm</button>
+
+    <button class="btn btn-secondary" type="button" 
+    (click)="editing=false">Cancel</button>
+</div>

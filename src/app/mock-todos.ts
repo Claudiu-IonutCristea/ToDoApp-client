@@ -1,4 +1,4 @@
-import { ToDo, IToDoItem } from './Classes/ToDo';
+import { ToDo, IToDoItem } from './classes/ToDo';
 
 export const TODOs: ToDo[] = [
   new ToDo(

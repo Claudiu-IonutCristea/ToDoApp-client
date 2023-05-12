@@ -1,0 +1,16 @@
+<ul style="list-style-type: none;" *ngIf="todo">
+    <li *ngFor="let item of todo.todoItems">
+        <app-todo-item 
+            [item]="item"
+            (itemChanged)="emitEventFromChild($event)">
+        </app-todo-item>
+    </li>
+</ul>
+
+<div class="input-group">
+    <input type="text" class="form-control" placeholder="enter new item" #newItem
+    (keyup.enter)="addNewItem(newItem.value); newItem.value=''">
+
+    <button class="btn btn-primary" type="button" 
+    (click)="addNewItem(newItem.value); newItem.value=''">Add item</button>
+</div>

@@ -1,0 +1,25 @@
+<div class="form-check-inline" *ngIf="!editing && item">
+    <button class="btn p-0 mb-1" type="button" (click)="deleteItem()" ngbTooltip="delete">
+        <i class="bi bi-trash text-danger"></i>
+    </button>
+
+    <button class="btn p-0 mb-1" type="button" (click)="editing=true" ngbTooltip="edit">
+            <i class="bi bi-pencil-square text-info"></i>
+    </button>
+
+    <input class="form-check-input mx-1" type="checkbox" [checked]="item.completed" (click)="updateCheck()">
+
+    <label class="form-check-label" [ngClass]="{'text-muted': item.completed}"> {{ item.text }} </label>
+</div>
+
+<!-- Display for when item.text is being edited -->
+<div class="input-group input-group-sm" *ngIf="editing && item">
+    <input type="text" class="form-control text-bg-dark" placeholder="{{ item.text }}" value="{{ item.text }}"
+        #newText (keyup.enter)="editText(newText.value);editing=false">
+
+        <button class="btn btn-primary" type="button"
+        (click)="editText(newText.value);editing=false">Confirm</button>
+
+        <button class="btn btn-secondary" type="button" 
+        (click)="editing=false">Cancel</button>
+</div>

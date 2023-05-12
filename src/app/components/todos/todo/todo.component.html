@@ -1,0 +1,6 @@
+<div ngbAccordionBody>
+    <ng-template>
+        <button class="btn btn-danger m-3" type="button" (click)="deleteTodo()">Delete ToDo List</button>
+        <app-todo-item-list [todo]="todo" (todoChanged)="emitEventFromChild($event)"></app-todo-item-list>
+    </ng-template>
+</div>

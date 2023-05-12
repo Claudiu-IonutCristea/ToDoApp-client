@@ -25,3 +25,23 @@ export interface IToDoItem {
     text: string;
     completed: boolean;
 }
+
+export enum TodoChangedTypes{
+    newItem,
+    newToDo,
+
+    deleteItem,
+    deleteTodo,
+
+    updateItemCheck,
+    updateItem,
+    updateTodo,
+}
+  
+export interface ITodoChangedEvtArgs {
+    type: TodoChangedTypes,
+    item?: IToDoItem,
+    todo?: ToDo,
+    textValue?: string,
+    sender: any,
+}
