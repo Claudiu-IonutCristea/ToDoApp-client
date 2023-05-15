@@ -1,44 +1,53 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { ToDo, IToDoItem, ITodoChangedEvtArgs, TodoChangedTypes } from 'src/app/classes/ToDo';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { ToDo, IToDoItem } from 'src/app/classes/ToDo';
+import { TodoService } from 'src/app/services/todo.service';
 
 @Component({
   selector: 'app-todo-item',
   templateUrl: './todo-item.component.html'
 })
 
-export class TodoItemComponent implements OnInit{
-  @Input() item?: IToDoItem;
-  @Output() itemChanged = new EventEmitter<ITodoChangedEvtArgs>;
+export class TodoItemComponent implements OnInit, OnDestroy {
+  @Input() item!: IToDoItem;
+  @Input() todo!: ToDo;
 
-  editing = false;
-  
-  constructor() {}
+  private _editing = false;
+  public get editing() { return this._editing; }
+
+  constructor(
+    private todoService: TodoService
+    ) {}
 
   ngOnInit(): void {
-    if(!this.item) throw new Error(`Input item not set for ${this}`);
+
   }
 
+  ngOnDestroy(): void {
+    
+  }
+
+
   deleteItem(){
-    this.itemChanged.emit({
-      sender: this,
-      type: TodoChangedTypes.deleteItem,
-      item: this.item,
-    });
+    this.todoService.deleteItem(this.todo, this.item);
   }
 
   updateCheck(){
-    this.itemChanged.emit({
-      sender: this,
-      type: TodoChangedTypes.updateItemCheck,
-      item: this.item,
-    });
+    this.todoService.itemCheckChanged(this.todo, this.item);
   }
 
-  editText(newText: string){
-    this.itemChanged.emit({
-      sender: this,
-      type: TodoChangedTypes.updateItem,
-      item: this.item,
-    })
+  editTextStart(){
+    this._editing = true;
   }
+
+  editTextConfirm(newText: string){
+    this._editing = false;
+    if(!newText || newText === this.item.text) return;
+
+    this.todoService.editItemTextConfirm(this.todo, this.item, newText);
+  }
+
+  editTextCancel(){
+    this._editing = false;
+  }
+
 }

@@ -1,37 +1,22 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { ToDo, IToDoItem, ITodoChangedEvtArgs, TodoChangedTypes } from 'src/app/classes/ToDo';
+import { Component, Input } from '@angular/core';
+import { ToDo, IToDoItem } from 'src/app/classes/ToDo';
+import { TodoService } from 'src/app/services/todo.service';
 
 @Component({
   selector: 'app-todo-item-list',
   templateUrl: './todo-item-list.component.html'
 })
-export class TodoItemListComponent implements OnInit{
-  @Input() todo? : ToDo;
-  @Output() todoChanged = new EventEmitter<ITodoChangedEvtArgs>;
+export class TodoItemListComponent {
+  @Input() todo!: ToDo;
 
-  constructor() {}
-
-  ngOnInit(): void {
-    if(!this.todo) throw new Error(`Input todo not set for ${this}`);
-  }
+  constructor(
+    private todoService: TodoService
+  ) {}
 
   addNewItem(text: string){
-    this.todoChanged.emit({
-      sender: this,
-      type: TodoChangedTypes.newItem,
-      todo: this.todo,
-      textValue: text,
-    })
-  }
+    if(!text) return;
 
-  emitEventFromChild(args: ITodoChangedEvtArgs){
-    this.todoChanged.emit({
-      sender: args.sender,
-      type: args.type,
-      todo: this.todo,
-      item: args.item,
-      textValue: args.textValue,
-    })
+    this.todoService.newItem(this.todo, text);
   }
 }
 

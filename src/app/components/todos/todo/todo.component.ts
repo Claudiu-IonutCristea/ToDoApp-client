@@ -1,35 +1,21 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { ITodoChangedEvtArgs, ToDo, TodoChangedTypes } from '../../../classes/ToDo';
+import { Component, Input } from '@angular/core';
+import { ToDo } from '../../../classes/ToDo';
+import { TodoService } from 'src/app/services/todo.service';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-todo',
   templateUrl: './todo.component.html'
 })
-export class TodoComponent implements OnInit{
-  @Input() todo?: ToDo;
-  @Output() todoChanged = new EventEmitter<ITodoChangedEvtArgs>;
+export class TodoComponent{
+  @Input() todo!: ToDo;
+  @Input() parentList!: ToDo[];
 
-  constructor() {}
-
-  ngOnInit(): void {
-    if(!this.todo) throw new Error(`Input todo not set for ${this}`);
-  }
+  constructor(
+    private todoService: TodoService
+  ) {}
 
   deleteTodo(){
-    this.todoChanged.emit({
-      sender: this,
-      type: TodoChangedTypes.deleteTodo,
-      todo: this.todo,
-    })
-  }
-
-  emitEventFromChild(args: ITodoChangedEvtArgs){
-    this.todoChanged.emit({
-      sender: args.sender,
-      type: args.type,
-      todo: args.todo ? args.todo : this.todo,
-      item: args.item,
-      textValue: args.textValue,
-    })
+    this.todoService.deleteTodo(this.parentList, this.todo);
   }
 }

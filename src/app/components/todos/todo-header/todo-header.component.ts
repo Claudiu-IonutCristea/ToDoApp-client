@@ -1,28 +1,34 @@
-import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
-import { ToDo, ITodoChangedEvtArgs, TodoChangedTypes } from 'src/app/classes/ToDo';
+import { Component, Input } from '@angular/core';
+import { ToDo } from 'src/app/classes/ToDo';
+import { TodoService } from 'src/app/services/todo.service';
 
 @Component({
   selector: 'app-todo-header',
   templateUrl: './todo-header.component.html'
 })
-export class TodoHeaderComponent implements OnInit{
-  @Input() todo?: ToDo;
-  @Output() headerChanged = new EventEmitter<ITodoChangedEvtArgs>;
+export class TodoHeaderComponent{
+  @Input() todo!: ToDo;
 
-  editing = false;
+  private _editing = false;
+  public get editing() { return this._editing; }
 
-  constructor() {}
 
-  ngOnInit(): void {
-    if(!this.todo) throw new Error(`Input todo not set for ${this}`);
+  constructor(
+    private todoService: TodoService
+  ) {}
+
+  editTitleConfirm(newTitle: string){
+    this._editing = false;
+    if(!newTitle || newTitle === this.todo.title) return;
+
+    this.todoService.editTodoTitleConfirm(this.todo, newTitle);
   }
 
-  editTitle(newTitle: string){
-    this.headerChanged.emit({
-      sender: this,
-      type: TodoChangedTypes.updateTodo,
-      todo: this.todo,
-      textValue: newTitle,
-    })
+  editTitleStart(){
+    this._editing = true;
+  }
+
+  editTitleCancel(){
+    this._editing = false;
   }
 }

@@ -2,7 +2,7 @@
     <li *ngFor="let item of todo.todoItems">
         <app-todo-item 
             [item]="item"
-            (itemChanged)="emitEventFromChild($event)">
+            [todo]="todo">
         </app-todo-item>
     </li>
 </ul>
