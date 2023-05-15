@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { A11yModule } from '@angular/cdk/a11y';
 
 
 import { AppComponent } from './app.component';
@@ -38,7 +39,8 @@ import { TodoHeaderComponent } from './components/todos/todo-header/todo-header.
     BrowserModule,
     NgbModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    A11yModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
